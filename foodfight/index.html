@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head><title>FoodFight</title></head>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/foodfight.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<body>
+		<div id='comments'></div>
+		<h3>Food Fight (Multi-Player Version)</h3>
+		<canvas id="canvas" width="400" height="300" style="border:2px solid black;background-color:gray;"></canvas>
+		<p>Uses:
+		<a href = 'http://code.google.com/p/box2dweb/'>Box2dWeb.js</a>,
+		<a href = 'http://socket.io/'>Socket.IO</a>
+		<br>Email: c_remmler@yahoo.com 
+		<p>Notes:
+		<br>1. Server sends data, and updates world, 20 times per second. Clients send data every 40 ms.
+		<br>2. Bug - Preloading images works with browsers except Chrome. Just keep reloading page until all images appear.
+		<p>References: 
+		<br>3. This is the demo for Box2dWeb. It updates its world 60 times a second.
+		<a href = http://code.google.com/p/box2dweb/>Box2dWeb</a>
+		<br>4. This describes a page that displayed everyones mouse. Clients sent data every 40 ms and it worked for a lot of traffic.
+		<a href = 'http://jeffkreeftmeijer.com/2010/things-i-learned-from-my-node.js-experiment/'>
+Kreeftmeiher's Socket.IO-Mouse Demo
+		</a>
+	</body>
+</html>
