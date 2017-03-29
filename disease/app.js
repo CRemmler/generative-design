@@ -4,15 +4,12 @@ var io = require('socket.io')(http);
 var express = require('express');
 
 var roomData = {};
-var messageQueue = [];
 
 app.use(express.static(__dirname));
 
 app.get('/', function(req, res){
 	res.sendfile('index.html');
 });
-
-roomData = [];
 
 io.on('connection', function(socket){
 	console.log("connection");
