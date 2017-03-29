@@ -8,10 +8,7 @@ jQuery(document).ready(function() {
   var myTimer;
   
   // show first screen, ask user to enter room
-  $("#netlogo-model-container").addClass("hidden");
-  $(".netlogo-tab-area .netlogo-tab-text").first().click();
-  $("[cm-text]").trigger("click");
-  $("#noRoomsChosen").removeClass("hidden");
+  displayLoginInterface();
 
   // save room, tell server room and 
   $("#submitRoomString").click(function() {
@@ -25,12 +22,12 @@ jQuery(document).ready(function() {
     if ($("#netlogo-button-1.netlogo-active").length === 1) {
       clearInterval(myTimer);
     } else {
-      myTimer = setInterval(teacherToServer, 5000);
+      myTimer = setInterval(teacherToServer, 1000);
     }
   });
   
   function teacherToServer() {
-    console.log("send hubnet-web-message from teacher to server to students ");
+    //console.log("send hubnet-web-message from teacher to server to students ");
     var items = getItems();
     socket.emit("teacher to server", {items: items});
   }
@@ -45,44 +42,48 @@ jQuery(document).ready(function() {
     room = data.room;
     turtleId = data.turtleId;
     userType = data.userType;
-    console.log("Save settings: room: " + room + " turtleId: " + turtleId + " userType: " + userType);
+    //console.log("Save settings: room: " + room + " turtleId: " + turtleId + " userType: " + userType);
   });
   
   // display teacher or student interface
   socket.on("display interface", function(data) {
-    console.log("Display interface");
+    //console.log("Display interface");
     userType === "teacher" ? displayTeacherInterface() : displayStudentInterface();
   });
   
   // teacher runs setup
   socket.on("setup", function() {
-    console.log("Setup");
+    //console.log("Setup");
     $("[cm-text]").trigger("click");
     session.widgetController.ractive.findComponent('console').fire('run', 'setup');
   });
 
   // teacher runs create-new-student
   socket.on("create-new-student", function() {
-    console.log("create-new-student");
+    //console.log("create-new-student");
     $("[cm-text]").trigger("click");
     session.widgetController.ractive.findComponent('console').fire('run', 'create-new-student');
   });
   
   // students update screen with info from server
   socket.on("server to turtles", function(data) {
-    console.log("Server to turtles");
+    //console.log("Server to turtles");
     $(".netlogo-tab-area .netlogo-tab-text").first().click();
     $("[cm-text]").trigger("click");
     putItems(data.items);
   });
   
   // remove student
+  socket.on("teacher disconnect", function(data) {
+    displayLoginInterface();
+  });
+  
   socket.on("student disconnect", function(data) {
     session.widgetController.ractive.findComponent('console').fire('run', 'ask turtle '+data.id+' [die]');
   });
   
   function putItems(itemList) {
-    console.log("put items");
+    //console.log("put items");
     $(".netlogo-tab-area .netlogo-tab-text").first().click();
     var numItems = itemList.length;
     var turtles = (world.turtles()._agents.length === 0) ? [] : world.turtles().toArray();
@@ -133,37 +134,37 @@ jQuery(document).ready(function() {
   
   function evaluateCommandList(cList) {
     var command = cList.shift();
-    console.log(command);
+    //console.log(command);
     session.widgetController.ractive.findComponent('console').fire('run', command);
     if (cList.length > 0) { evaluateCommandList(cList); }
   }
   
   // when student wants to change world by pushing up
   $("#netlogo-button-21").click(function() {
-    console.log("clicked down by " + turtleId);
+    //console.log("clicked down by " + turtleId);
     socket.emit("move turtle", {xChange: 0, yChange:-1}); 
   });
   
   // when student wants to change world by pushing up
   $("#netlogo-button-22").click(function() {
-    console.log("clicked up by " + turtleId);
+    //console.log("clicked up by " + turtleId);
     socket.emit("move turtle", {xChange: 0, yChange:1}); 
   });
   
   // when student wants to change world by pushing up
   $("#netlogo-button-23").click(function() {
-    console.log("clicked right by " + turtleId);
+    //console.log("clicked right by " + turtleId);
     socket.emit("move turtle", {xChange: 1, yChange:0}); 
   });
   
   // when student wants to change world by pushing up
   $("#netlogo-button-24").click(function() {
-    console.log("clicked left by " + turtleId);
+    //console.log("clicked left by " + turtleId);
     socket.emit("move turtle", {xChange: -1, yChange:0}); 
   });
   
   function getItems() {
-    console.log("get items");
+    //console.log("get items");
     var itemsList = [];
     var itemObject;
     var item;
@@ -191,6 +192,13 @@ jQuery(document).ready(function() {
     $("#netlogo-monitor-22 output").val(color + " " + baseshape);
     $("#netlogo-monitor-28 output").val("(" + xcor + "," + ycor + ")");
     $("#netlogo-monitor-29 output").val(infected);
+  }
+  
+  function displayLoginInterface() {
+    $("#netlogo-model-container").addClass("hidden");
+    $(".netlogo-tab-area .netlogo-tab-text").first().click();
+    $("[cm-text]").trigger("click");
+    $("#noRoomsChosen").removeClass("hidden");
   }
   
   function displayTeacherInterface() {
@@ -223,7 +231,7 @@ jQuery(document).ready(function() {
     $("#netlogo-monitor-29").removeClass("hidden");
     $(".netlogo-view-container").removeClass("hidden");
     $(".netlogo-view-container").css("top","10px");
-    //$(".netlogo-tab-area").addClass("hidden");
+    $(".netlogo-tab-area").addClass("hidden");
     $(".netlogo-export-wrapper").addClass("hidden");
     $("#netlogo-monitor-30").removeClass("hidden");
     $("#netlogo-monitor-31").removeClass("hidden");

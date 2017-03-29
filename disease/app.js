@@ -12,11 +12,11 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-	console.log("connection");
+	//console.log("connection");
 	
 	// user enters room
 	socket.on("enter room", function(data) {
-		console.log("enter room");
+		//console.log("enter room");
 		socket.myRoom = data.room;
 		var myRoom = socket.myRoom;
 		if (!roomData[myRoom]) {
@@ -48,7 +48,7 @@ io.on('connection', function(socket){
 		
 	// teacher shares world
 	socket.on("teacher to server", function(data) {
-		console.log("teacher to server");
+		//console.log("teacher to server");
 		var myRoom = socket.myRoom;
 		roomData[myRoom].items = data.items;
 		socket.to(myRoom+"-student").emit("server to turtles", {items: data.items});
@@ -56,27 +56,27 @@ io.on('connection', function(socket){
 	
 	// student moves turtle
 	socket.on("move turtle", function(data) {
-			console.log("move turtle " + socket.myTurtleId);
+			//console.log("move turtle " + socket.myTurtleId);
 			var myTurtleId = socket.myTurtleId;
 			var myRoom = socket.myRoom;
-			roomData[myRoom].items[myTurtleId].xcor = roomData[myRoom].items[myTurtleId].xcor + data.xChange;
-			roomData[myRoom].items[myTurtleId].ycor = roomData[myRoom].items[myTurtleId].ycor + data.yChange;		
-			socket.to(myRoom+"-teacher").emit("server to turtles", {items: roomData[myRoom].items});
+			if (roomData[myRoom]) {
+				roomData[myRoom].items[myTurtleId].xcor = roomData[myRoom].items[myTurtleId].xcor + data.xChange;
+				roomData[myRoom].items[myTurtleId].ycor = roomData[myRoom].items[myTurtleId].ycor + data.yChange;		
+				socket.to(myRoom+"-teacher").emit("server to turtles", {items: roomData[myRoom].items});
+			}
 	});
 	
 	// user exits
 	socket.on('disconnect', function () {
-		console.log(socket.myTurtleId + " disconnected");
+		//console.log(socket.myTurtleId + " disconnected");
 		var myRoom = socket.myRoom;
 		socket.to(myRoom).emit("message", {text: "Send to others. " + socket.myUserType + " left room " + myRoom});	
 		if (socket.myUserType === "teacher") {
-			var studentsInRoom = io.sockets.clients(myRoom);
+			socket.to(myRoom+"-student").emit("teacher disconnect", {id: socket.myTurtleId});
+			// remove students from room.		
+			//socket.leave(myRoom+"-student");	
+			// kill channel
 			delete roomData[myRoom];
-			//if (studentsInRoom.length > 0) {
-			//	studentsInRoom.forEach(function(client) {
-			//		client.disconnect();
-			//	});
-			// }
 		} else {
 			socket.to(myRoom+"-teacher").emit("student disconnect", {id: socket.myTurtleId});
 			if (roomData[myRoom]) {

@@ -63481,9 +63481,8 @@ to go
   ;; listen-clients
 
   ;; CR every 0.1
-  every 5
+  every 1
   [
-    show "go"
     ;;allow the androids to wander around the view
     if wander? [ androids-wander ]
 
@@ -63645,7 +63644,7 @@ end
 ;; Create a turtle, set its shape, color, and position
 ;; and tell the node what its turtle looks like and where it is
 to create-new-student
-  show "create-new-student"
+  ;; CR show "create-new-student"
   set hubnet-web-message hubnet-web-message + 1
   create-students 1
   [
@@ -63662,7 +63661,7 @@ end
 
 ;; sets the turtle variables to appropriate initial values
 to setup-student-vars  ;; turtle procedure
-  show "setup-student-vars"
+  ;; CR show "setup-student-vars"
   ;; CR set user-id hubnet-message-source
   set-unique-shape-and-color
   move-to one-of patches
@@ -63673,7 +63672,7 @@ end
 
 ;; pick a baseshape and color for the turtle
 to set-unique-shape-and-color
-  show "set-unique-shape-and-color"
+  ;; CR show "set-unique-shape-and-color"
   let code random max-possible-codes
   show max-possible-codes
   while [member? code used-shape-colors and count students < max-possible-codes]
@@ -63683,7 +63682,7 @@ to set-unique-shape-and-color
   set used-shape-colors (lput code used-shape-colors)
   set baseshape item (code mod length shape-names) shape-names
   set shape baseshape
-  show round ( code / length shape-names )
+  ;; CR show round ( code / length shape-names )
   set color item (round (code / length shape-names)) colors
 end
 
