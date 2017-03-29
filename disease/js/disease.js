@@ -21,9 +21,8 @@ jQuery(document).ready(function() {
   
   // when teachers world changes, send teacher sends items
   var myTimer;
-  $("#netlogo-button-1").click(function() {
-    console.log("go button pushed");
-    if ($("#netlogo-button-1.netlogo-active").length === 0) {
+  $("#netlogo-button-1").mousedown(function() {
+    if ($("#netlogo-button-1.netlogo-active").length === 1) {
       clearInterval(myTimer);
     } else {
       myTimer = setInterval(teacherToServer, 5000);
@@ -69,25 +68,31 @@ jQuery(document).ready(function() {
     session.widgetController.ractive.findComponent('console').fire('run', 'create-new-student');
   });
   
+  // students update screen with info from server
   socket.on("server to turtles", function(data) {
     console.log("Server to turtles");
-    if ($("#netlogo-button-1.netlogo-active").length === 1) {
-      $(".netlogo-tab-area .netlogo-tab-text").first().click();
-      $("[cm-text]").trigger("click");
-      putItems(data.items);
-    }
+    $(".netlogo-tab-area .netlogo-tab-text").first().click();
+    $("[cm-text]").trigger("click");
+    putItems(data.items);
   });
-
+  
+  // remove student
+  socket.on("student disconnect", function(data) {
+    session.widgetController.ractive.findComponent('console').fire('run', 'ask turtle '+data.id+' [die]');
+  });
+  
   function putItems(itemList) {
+    console.log("put items");
     $(".netlogo-tab-area .netlogo-tab-text").first().click();
     var numItems = itemList.length;
     var turtles = (world.turtles()._agents.length === 0) ? [] : world.turtles().toArray();
     var numTurtles = turtles.length;
-    var turtleId;
-    console.log('numTurtles ' + numTurtles + ' numItems ' + numItems);
     for (var j=0; j < numTurtles; j++) {
       turtle = turtles[0];
       item = itemList[0];
+      if (turtleId === item['id']) {
+        displayReporters(item['xcor'], item['ycor'], item['shape'], item['color'], item['infected']);
+      }
       turtle.setVariable('xcor', item['xcor']);
       turtle.setVariable('ycor', item['ycor']);
       turtle.setVariable('baseshape', "'" + item['shape'] + "'");
@@ -104,10 +109,12 @@ jQuery(document).ready(function() {
         session.widgetController.ractive.findComponent('console').fire('run', 'ask one-of students [die]');          
       }
     } else if (numTurtles < numItems) {
-      //var addTurtles = numItems - numTurtles;
       var commandList = [];
       for (var k=numTurtles; k < numItems; k++) {
         item = itemList[k];
+        if (turtleId === item['id']) {
+          displayReporters(item['xcor'], item['ycor'], item['shape'], item['color'], item['infected']);
+        }
         command = "create-students " + (k+1).toString() + " [" +
           " set xcor " + item['xcor'] + 
           " set ycor " + item['ycor'] + 
@@ -178,6 +185,12 @@ jQuery(document).ready(function() {
         return itemsList; 
       }
     }
+  }
+  
+  function displayReporters(xcor, ycor, baseshape, color, infected) {
+    $("#netlogo-monitor-22 output").val(color + " " + baseshape);
+    $("#netlogo-monitor-28 output").val("(" + xcor + "," + ycor + ")");
+    $("#netlogo-monitor-29 output").val(infected);
   }
   
   function displayTeacherInterface() {

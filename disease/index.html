@@ -63683,13 +63683,8 @@ to set-unique-shape-and-color
   set used-shape-colors (lput code used-shape-colors)
   set baseshape item (code mod length shape-names) shape-names
   set shape baseshape
-  show code 
-  show length shape-names
-  show colors
-  show (code / length shape-names)
-  ;; show item (code / length shape-names) colors
+  show round ( code / length shape-names )
   set color item (round (code / length shape-names)) colors
-  ;;set color white
 end
 
 ;; report the string version of the turtle's color

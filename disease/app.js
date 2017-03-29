@@ -16,10 +16,10 @@ roomData = [];
 
 io.on('connection', function(socket){
 	console.log("connection");
+	
 	// user enters room
 	socket.on("enter room", function(data) {
 		console.log("enter room");
-		
 		socket.myRoom = data.room;
 		var myRoom = socket.myRoom;
 		if (!roomData[myRoom]) {
@@ -54,7 +54,6 @@ io.on('connection', function(socket){
 		console.log("teacher to server");
 		var myRoom = socket.myRoom;
 		roomData[myRoom].items = data.items;
-		//console.log(data.items);
 		socket.to(myRoom+"-student").emit("server to turtles", {items: data.items});
 	});
 	
@@ -63,24 +62,26 @@ io.on('connection', function(socket){
 			console.log("move turtle " + socket.myTurtleId);
 			var myTurtleId = socket.myTurtleId;
 			var myRoom = socket.myRoom;
-		  roomData[myRoom].items[myTurtleId].xcor = roomData[myRoom].items[myTurtleId].xcor + data.xChange;
+			roomData[myRoom].items[myTurtleId].xcor = roomData[myRoom].items[myTurtleId].xcor + data.xChange;
 			roomData[myRoom].items[myTurtleId].ycor = roomData[myRoom].items[myTurtleId].ycor + data.yChange;		
 			socket.to(myRoom+"-teacher").emit("server to turtles", {items: roomData[myRoom].items});
 	});
 	
 	// user exits
 	socket.on('disconnect', function () {
+		console.log(socket.myTurtleId + " disconnected");
 		var myRoom = socket.myRoom;
-		socket.to(myRoom).emit("message", {text: "Send to others. I left room " + myRoom});	
+		socket.to(myRoom).emit("message", {text: "Send to others. " + socket.myUserType + " left room " + myRoom});	
 		if (socket.myUserType === "teacher") {
 			var studentsInRoom = io.sockets.clients(myRoom);
 			delete roomData[myRoom];
-			if (studentsInRoom.length > 0) {
-				studentsInRoom.forEach(function(client) {
-					client.disconnect();
-				});
-			}
+			//if (studentsInRoom.length > 0) {
+			//	studentsInRoom.forEach(function(client) {
+			//		client.disconnect();
+			//	});
+			// }
 		} else {
+			socket.to(myRoom+"-teacher").emit("student disconnect", {id: socket.myTurtleId});
 			if (roomData[myRoom]) {
 				if (roomData[myRoom].numStudents > 0) {roomData[myRoom].numStudents--;}
 			}
@@ -90,5 +91,5 @@ io.on('connection', function(socket){
 });
 
 http.listen(3003, function(){
-  console.log('listening on *:3003');
+	console.log('listening on *:3003');
 });
