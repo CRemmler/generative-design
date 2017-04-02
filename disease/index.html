@@ -1639,7 +1639,10 @@ img.link-img {
     <div id="netlogo-model-container" style="display: inline-block;"></div>
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
-  	<script type="text/javascript" src="js/disease.js"></script>
+  	<script type="text/javascript" src="js/client.js"></script>
+    <script type="text/javascript" src="js/events.js"></script>
+  	<script type="text/javascript" src="js/interface.js"></script>
+  	<script type="text/javascript" src="js/netlogoworld.js"></script>
   	<script src="/socket.io/socket.io.js"></script>
     
     <script>/*eslint-disable no-unused-vars*/
@@ -61210,6 +61213,7 @@ into the sorting code and caused a 25% performance hit in BZ Benchmark. --JAB (4
       })(this));
     };
 
+
     AgentStreamController.prototype.repaint = function() {
       this.view.transformToWorld(this.model.world);
       this.patchDrawer.repaint(this.model);
@@ -61224,6 +61228,9 @@ into the sorting code and caused a 25% performance hit in BZ Benchmark. --JAB (4
     };
 
     AgentStreamController.prototype.update = function(modelUpdate) {
+      if (socket && modelUpdate[0]) {
+        socket.emit("update", {turtles: modelUpdate[0].turtles}); 
+      }
       var k, len, u, updates;
       updates = Array.isArray(modelUpdate) ? modelUpdate : [modelUpdate];
       for (k = 0, len = updates.length; k < len; k++) {
@@ -63371,7 +63378,7 @@ _nS('controllers.Local'); _root['controllers']['Local']['standalone'] =
 globals
 [
   run-number
-
+  key
   ;; variables used to assign unique color and shape to clients
   shape-names        ;; list that holds the names of the non-sick shapes a student's turtle can have
   colors             ;; list that holds the colors used for students' turtles
@@ -63393,6 +63400,7 @@ turtles-own
   infected    ;; if a turtle is sick, infected is true, otherwise, it is false
   baseshape   ;; original shape of a turtle
   stepsize    ;; the amount that a turtle will go forward in the current direction
+  socketid      ;; socketid of hubnet-web-user
 ]
 
 breed [ androids android ]  ;; created by the CREATE ANDROIDS button; not controlled by anyone, but can become sick and spread sickness
@@ -63637,15 +63645,14 @@ to execute-command [command]
   [ execute-move 90 stop ]
   if command = "Left"
   [ execute-move 270 stop ]
-  if command = "Change Appearance"
-  [ execute-change-turtle stop ]
+  ;; if command = "Change Appearance"
+  ;; [ execute-change-turtle stop ]
 end
 
 ;; Create a turtle, set its shape, color, and position
 ;; and tell the node what its turtle looks like and where it is
 to create-new-student
   ;; CR show "create-new-student"
-  set hubnet-web-message hubnet-web-message + 1
   create-students 1
   [
     setup-student-vars
@@ -63674,16 +63681,16 @@ end
 to set-unique-shape-and-color
   ;; CR show "set-unique-shape-and-color"
   let code random max-possible-codes
-  show max-possible-codes
   while [member? code used-shape-colors and count students < max-possible-codes]
   [
     set code random max-possible-codes
   ]
   set used-shape-colors (lput code used-shape-colors)
-  set baseshape item (code mod length shape-names) shape-names
+  set key (code mod length shape-names)
+  set baseshape item (key - 1) shape-names
   set shape baseshape
-  ;; CR show round ( code / length shape-names )
-  set color item (round (code / length shape-names)) colors
+  set key code / length shape-names
+  set color item round (key - 1) colors
 end
 
 ;; report the string version of the turtle's color
@@ -65015,8 +65022,9 @@ Line -7500403 true 150 150 210 180
 
     <script>
 
-      Ractive.DEBUG = true;
-
+      // CR Ractive.DEBUG = true;
+      Ractive.DEBUG = false;
+ 
       var loadingOverlay  = document.getElementById("loading-overlay");
       var activeContainer = loadingOverlay;
       var modelContainer  = document.querySelector("#netlogo-model-container");
