@@ -1,8 +1,8 @@
 jQuery(document).ready(function() {
 
-  /////////////
+  //-------------------//
   // Events From login
-  /////////////
+  //-----------------------//
   
   // when student submits room name
   $("#submitRoomString").click(function() {
@@ -10,9 +10,9 @@ jQuery(document).ready(function() {
     socket.emit("enter room", {room: myRoom});
   });
   
-  ///////////////
+  //-----------------------//
   // Events From teacher
-  ///////////////
+  //-----------------------//
   
   // when teacher pushes go button
   /*$("#netlogo-button-1").mousedown(function() {
@@ -27,9 +27,9 @@ jQuery(document).ready(function() {
   //function go() {
   //}
   
-  ///////////////
+  //-----------------------//
   // Events From student
-  ///////////////
+  //-----------------------//
   
   var stepsize = +$("#netlogo-slider-26 .netlogo-slider-value input").val();
   // when student clicks stepsize slider
@@ -59,7 +59,7 @@ jQuery(document).ready(function() {
   });
   
   $("#netlogo-button-25").click(function() {
-    socket.emit("change appearance", {color: "red", baseshape: "box"}); 
+    socket.emit("change appearance"); 
   });
   
 });

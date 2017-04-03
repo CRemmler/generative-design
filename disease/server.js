@@ -16,6 +16,8 @@ io.on('connection', function(socket){
 	// user enters room
 	socket.on("enter room", function(data) {
 		
+		var myUserType, mySocketId, myTurtleId;
+		
     // declare myRoom
     socket.myRoom = data.room;
     var myRoom = socket.myRoom;
@@ -23,16 +25,17 @@ io.on('connection', function(socket){
 			roomData[myRoom] = {};
 			roomData[myRoom].teacherInRoom = false;
       roomData[myRoom].turtles = {};
+			roomData[myRoom].turtleDict = {};
 		}
     // declare myUserType, first user in is a teacher, rest are students
 		socket.myUserType = (!roomData[myRoom].teacherInRoom) ? "teacher" : "student";
-		var myUserType = socket.myUserType;
+		myUserType = socket.myUserType;
 		
     // declare mySocketId
-		var mySocketId = socket.id;
-    
+		mySocketId = socket.id;
+    //console.log("socket.myTurtleId " + socket.myTurtleId);
     // send settings to client
-    socket.emit("save settings", {room: myRoom, userType: myUserType, socketId: mySocketId});
+    socket.emit("save settings", {userType: myUserType, socketId: mySocketId});
 
     // join myRoom
 		socket.join(myRoom+"-"+myUserType);
@@ -50,43 +53,67 @@ io.on('connection', function(socket){
 		} else {
       // action for teacher to take
 			socket.to(myRoom+"-teacher").emit("setup student", {socketId: mySocketId});
+			socket.emit("get turtleid");
 		}
     
 	});	
   
+	// save client's turtleId value
+	socket.on("send turtleid", function(data) {
+		console.log("setting turtleid to " + data.turtleId);
+		socket.myTurtleId = data.turtleId;
+	});
+	
+	// send the entire state of the world, in this room
   socket.on("update all", function(data) {
+		console.log("UPDATE ALL");
     var myRoom = socket.myRoom;
     var socketId = data.socketId;
     io.to(socketId).emit("send update", {turtles: roomData[myRoom].turtles});   
-  });
+	});
   
+	// send only most recent updates of the world, in this room
   socket.on("update", function(data) {
     var myRoom = socket.myRoom;
+		var mySocketId = socket.id;
+		var myTurtleId;
     for (var key in data.turtles) {
       roomData[myRoom].turtles[key] = data.turtles[key];
-    }
-    socket.to(myRoom+"-student").emit("send update", {turtles: data.turtles}); 
+			if (!turtleDict[key]) {
+				roomData[myRoom].turtleDict[key] = mySocketId;
+				socket.myTurtleId = key;
+				myTurtleId = socket.myTurtleId;
+				socket.io.to(mySocketid).emit("save settings", {turtleId: myTurtleId},
+			}
+		}
+		socket.to(myRoom+"-student").emit("send update", {turtles: data.turtles});
   });
 
   //-----------------------//
   // Disease-specific logic
   //-----------------------//
 
-  socket.on("change appearance", function(data) {
+  socket.on("change appearance", function() {
     var myRoom = socket.myRoom;
-    var mySocketId = socket.id;
-    socket.to(myRoom+"-teacher").emit("send appearance", {socketId: mySocketId});
-  });
-  
-  socket.on("change infected", function(data) {
-    socket.emit("send infected", {socketId: mySocketId, infected: data.infected });
-  });
+		var myTurtleId = socket.myTurtleId;
+		var mySocketId = socket.id;
+		socket.to(myRoom+"-teacher").emit("send appearance", {turtleId: myTurtleId});
+	});
   
 	socket.on("change position", function(data) {
     var myRoom = socket.myRoom;
+		var myTurtleId = socket.myTurtleId;
 		var mySocketId = socket.id;
-    socket.to(myRoom+"-teacher").emit("send position", {socketId: mySocketId, xChange: data.xChange, yChange: data.yChange });
+		var turtles = roomData[myRoom].turtles;
+		if (data.yChange === 0) {
+			roomData[myRoom].turtles[myTurtleId].xcor = roomData[myRoom].turtles[myTurtleId].xcor + data.xChange;
+		} else {
+			roomData[myRoom].turtles[myTurtleId].ycor = roomData[myRoom].turtles[myTurtleId].ycor + data.yChange;
+		}
+		turtles[myTurtleId] = roomData[myRoom].turtles[myTurtleId];
+    socket.to(myRoom+"-teacher").emit("send update", {turtles: turtles}); 
 	});
+	
   //------------------------------//
   // End of Disease-specific logic
   //------------------------------//
@@ -94,18 +121,18 @@ io.on('connection', function(socket){
 	// user exits or hubnet exit message
 	socket.on('disconnect', function () {
 		var myRoom = socket.myRoom;
-		//socket.to(myRoom).emit("message", {text: "Send to others. " + socket.myUserType + " left room " + myRoom});	
+		var myTurtleId = socket.myTurtleId;// ? socket.myTurtleId : getTurtleId();
+		var socketId;
 		if (socket.myUserType === "teacher") {
-			socket.to(myRoom+"-student").emit("teacher disconnect", {id: socket.mySocketId});
-			// remove students from room.		
-			//socket.leave(myRoom+"-student");	
-			// kill channel
+			socket.to(myRoom+"-student").emit("teacher disconnect");
+			var sockets = io.sockets.adapter.rooms[myRoom+"-student"];
+			for (var key in sockets) {
+				var thisSocket = sockets[key];
+				thisSocket.leave(myRoom+"-student");  
+			} 
 			delete roomData[myRoom];
 		} else {
-			socket.to(myRoom+"-teacher").emit("student disconnect", {id: socket.mySocketId});
-			if (roomData[myRoom]) {
-				if (roomData[myRoom].numStudents > 0) {roomData[myRoom].numStudents--;}
-			}
+			socket.to(myRoom+"-teacher").emit("student disconnect", {turtleId: myTurtleId});
 		}
 	});
 	

@@ -1,11 +1,10 @@
 var socket;
 var oliver;
+
 jQuery(document).ready(function() {
-  var room;
   var socketId;
   var userType;
-  var myTimer;
-  var myWorld;
+  var turtleId;
   
   socket = io.connect('localhost:3003');
 
@@ -14,9 +13,9 @@ jQuery(document).ready(function() {
 
   // save student settings
   socket.on("save settings", function(data) {
-    room = data.room;
-    socketId = data.socketId;
-    userType = data.userType;
+    if (data.socketId) { socketId = data.socketId; }
+    if (data.userType) { userType = data.userType; }
+    if (data.turtleId) { turtleId = data.turtleId; }
   });
   
   // display teacher or student interface
@@ -24,16 +23,37 @@ jQuery(document).ready(function() {
     userType === "teacher" ? Interface.showTeacher() : Interface.showStudent();
   });
   
-  //-----------------------
+  //-----------------------//
   // Disease-specific logic
-  //-----------------------
+  //-----------------------//
   
-  //socket.to(myRoom+"-student").emit("send update", {modelUpdate: this.modelUpdate}});    
+  // netlogo colors = ["white", "brown", "green", "yellow", "(violet + 1)", "(sky + 1)"];
+  var colorNames = ["white", "brown", "green", "yellow", "purple", "blue"];
+  var colorValues = [9.9, 35, 55, 45, 116, 96];
+  var teacherObject[mySocketId];
+  
+  // include most recent updates  to world
   socket.on("send update", function(data) {
-    //console.log("get update", data.turtles);
+    var turtle;
+    
+    // if one of the updated turtles is a student,
+    // send updated values to that student's reporters
+    if (data.turtles[turtleId]) {
+      turtle = data.turtles[turtleId];
+      if (turtle.infected) { $("#netlogo-monitor-29 output").val(turtle.infected); }
+      if (turtle.xcor) { $("#xcor").val(turtle.xcor); }
+      if (turtle.ycor) { $("#ycor").val(turtle.xcor); }
+      if (turtle.color) {
+        var colorIndex = colorValues.indexOf(turtle.color);
+        (colorValues[colorIndex]) ? $("#shape").val(colorValues[colorIndex]) : $("#shape").val(""); 
+      }
+      if (turtle.shape) { $("#shape").val(turtle.shape); }
+    }
+    
+    // student repaints world with updated values
     oliver.applyUpdate({turtles: data.turtles});
     oliver.repaint();
-  });
+  });  
   
   // teacher runs setup
   socket.on("setup teacher", function() {
@@ -50,39 +70,45 @@ jQuery(document).ready(function() {
     socket.emit("update all", {socketId: data.socketId});
   });
   
+  // student uses socketId to find turtle and get it's turtleId
+  socket.on("get turtleid", function(data) {
+    var numTurtles = world.turtles().toArray().length;
+    var turtleId;
+    for (var i = numTurtles - 1; i >= 0; i--) {
+      turtle = world.turtles().toArray()[i];
+      if (data.socketId === turtle.getVariable("socketid")) {
+        turtleId = turtle.id; 
+        socket.emit("send turtleid", {turtleId: turtleId});
+        break;
+      }
+    }
+  });
+  
+  // teacher gives student a new appearance
   socket.on("send appearance", function(data) {
-    // store updated appearance in world, so teacher finds it
-    NetLogoWorld.setAppearance(data.socketId);
-    // update text on student's client
-    //$("#netlogo-monitor-22 output").val(data.color + " " + data.baseshape);
+    command = 'ask student ' + data.turtleId + 
+      ' [' +
+        ' set used-shape-colors remove my-code used-shape-colors ' +
+        ' set-unique-shape-and-color ' +
+        ' if infected ' +
+        ' [ set-sick-shape ] ' +
+      ']';
+    session.widgetController.ractive.findComponent('console').fire('run', command);
   });
   
-  // student sets position based on arrow key buttons
-  socket.on("send position", function(data) {
-    //console.log("send position " + data.socketId);
-    // update position in world, so teacher finds it
-    var newPosition = NetLogoWorld.setPosition(data.socketId, data.xChange, data.yChange);
-    // update text on student's client
-    // $("#netlogo-monitor-28 output").val("(" + newPosition.xcor + "," + newPosition.ycor + ")");
-  });
-  
-  // teacher sends infection status to student
-  socket.on("send infected", function(data) {
-    // update text on student's client
-    // $("#netlogo-monitor-29 output").val(data.infected);
-  });
-  
-  //------------------------------
+  //------------------------------//
   // End of Disease-specific logic
-  //------------------------------
+  //------------------------------//
   
-  // remove student
+  // student leaves activity and sees login page
   socket.on("teacher disconnect", function(data) {
     Interface.showLogin();
   });
   
+  // remove student
   socket.on("student disconnect", function(data) {
-    // session.widgetController.ractive.findComponent('console').fire('run', 'ask turtle '+data.id+' [die]');
+    var command = 'ask turtle "'+data.socketId+'" [die]';
+    session.widgetController.ractive.findComponent('console').fire('run', command);
   });
   
 });

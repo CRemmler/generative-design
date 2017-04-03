@@ -4,12 +4,11 @@ Features:
 3. Teacher display shows student's turtles.
 4. When students move arrow keys, their turtle moves around.
 5. Students see reporters such as position, shape, color and state of infection.
-6. When a teacher logs out, students return to login state 
+6. When a teacher logs out, students leave room and return to login state.
+7. When a student logs out, the teacher removes student's turtle 
 
 Issues:
-1. When a teacher logs out, remove students from room.
 2. Students see reporters such as position, shape, color and state of infection.
-3. When as student logs out, remove their turtles.
 4. Replace NetLogo commands with Javascript:
 a.    var command = "setup";
 b.    var command = "create-students 1 [" + 
@@ -23,4 +22,4 @@ d.    command = 'ask students with [socketid = "' + turtleSocketId + '" ]' +
         ' if infected ' +
         ' [ set-sick-shape ] ' +
       ']'; 
-
+5. make sure all colors work

@@ -61233,6 +61233,7 @@ into the sorting code and caused a 25% performance hit in BZ Benchmark. --JAB (4
       for (k = 0, len = updates.length; k < len; k++) {
         u = updates[k];
         if (socket) {
+          console.log(modelUpdate[k].turtles);
           socket.emit("update", {turtles: modelUpdate[k].turtles}); 
         }
         oliver = this;
@@ -63374,12 +63375,10 @@ _nS('controllers.Local'); _root['controllers']['Local']['standalone'] =
 ;; Variable and Breed declarations ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; CR Globals
-
 globals
 [
   run-number
-  key
+  
   ;; variables used to assign unique color and shape to clients
   shape-names        ;; list that holds the names of the non-sick shapes a student's turtle can have
   colors             ;; list that holds the colors used for students' turtles
@@ -63422,7 +63421,6 @@ to startup
   setup-vars
   setup-quick-start
   reset-ticks
-  set hubnet-web-message 0
 end
 
 to setup
@@ -63680,18 +63678,21 @@ end
 
 ;; pick a baseshape and color for the turtle
 to set-unique-shape-and-color
-  ;; CR show "set-unique-shape-and-color"
   let code random max-possible-codes
   while [member? code used-shape-colors and count students < max-possible-codes]
   [
     set code random max-possible-codes
   ]
   set used-shape-colors (lput code used-shape-colors)
-  set key (code mod length shape-names)
-  set baseshape item (key - 1) shape-names
+  let key (code mod length shape-names)
+  set baseshape item key shape-names
+  show length shape-names
+  show key 
   set shape baseshape
   set key code / length shape-names
-  set color item round (key - 1) colors
+  show length colors
+  show floor key 
+  set color item floor key colors
 end
 
 ;; report the string version of the turtle's color
