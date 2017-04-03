@@ -1,4 +1,5 @@
-var socket, olive, oliverr;
+var socket;
+var oliver;
 jQuery(document).ready(function() {
   var room;
   var socketId;
@@ -29,8 +30,9 @@ jQuery(document).ready(function() {
   
   //socket.to(myRoom+"-student").emit("send update", {modelUpdate: this.modelUpdate}});    
   socket.on("send update", function(data) {
-    console.log("get update", data.turtles);
-    //AgentStreamController.prototype.update(data.modelUpdate);
+    //console.log("get update", data.turtles);
+    oliver.applyUpdate({turtles: data.turtles});
+    oliver.repaint();
   });
   
   // teacher runs setup
@@ -57,7 +59,7 @@ jQuery(document).ready(function() {
   
   // student sets position based on arrow key buttons
   socket.on("send position", function(data) {
-    console.log("send position " + data.socketId);
+    //console.log("send position " + data.socketId);
     // update position in world, so teacher finds it
     var newPosition = NetLogoWorld.setPosition(data.socketId, data.xChange, data.yChange);
     // update text on student's client

@@ -61228,13 +61228,14 @@ into the sorting code and caused a 25% performance hit in BZ Benchmark. --JAB (4
     };
 
     AgentStreamController.prototype.update = function(modelUpdate) {
-      if (socket && modelUpdate[0]) {
-        socket.emit("update", {turtles: modelUpdate[0].turtles}); 
-      }
       var k, len, u, updates;
       updates = Array.isArray(modelUpdate) ? modelUpdate : [modelUpdate];
       for (k = 0, len = updates.length; k < len; k++) {
         u = updates[k];
+        if (socket) {
+          socket.emit("update", {turtles: modelUpdate[k].turtles}); 
+        }
+        oliver = this;
         this.applyUpdate(u);
       }
       return this.repaint();
