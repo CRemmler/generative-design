@@ -1642,7 +1642,6 @@ img.link-img {
   	<script type="text/javascript" src="js/client.js"></script>
     <script type="text/javascript" src="js/events.js"></script>
   	<script type="text/javascript" src="js/interface.js"></script>
-  	<script type="text/javascript" src="js/netlogoworld.js"></script>
   	<script src="/socket.io/socket.io.js"></script>
     
     <script>/*eslint-disable no-unused-vars*/
@@ -42051,8 +42050,8 @@ function pm(a,c){if(null===c)return 0;if(nF(c)){if("number"===typeof c){var d=+c
 function Z(a,c){var d=c.z();return kc(d,c.x()+"(",",",")")}function CE(a,c,d){if(zi(c,1)||ob(c,1)||rb(c,1)||pb(c,1)||qb(c,1))return c.n[d];if(lb(c,1))return(new Xi).Sa(c.n[d]);if(mb(c,1)||nb(c,1)||kb(c,1)||uF(c))return c.n[d];if(null===c)throw(new Zd).d();throw(new p).l(c);}tF.prototype.b=m({zoa:0},!1,"scala.runtime.ScalaRunTime$",{zoa:1,e:1});var xF=void 0;function V(){xF||(xF=(new tF).d());return xF}function yF(){}yF.prototype=new n;yF.prototype.constructor=yF;l=yF.prototype;l.d=function(){return this};
 l.bv=function(a,c){var d;d=ha(-862048943,c);d=ha(461845907,d<<15|d>>>-15|0);return a^d};function vF(a,c){var d=Ra(c);if(d===c)return d;d=zF(Va(),c);return oF(d)===c?d.ya^d.Cb:Ma(Na(),c)}function AF(a,c){if(null===c)return 0;if("number"===typeof c)return vF(0,+c);if(Ga(c)){var d=Ua(c);return wF(0,d)}return Ja(c)}l.fa=function(a,c){var d=this.bv(a,c);return-430675100+ha(5,d<<13|d>>>-13|0)|0};function wF(a,c){var d=c.ya,e=c.Cb;return e===d>>31?d:d^e}
 l.Lb=function(a,c){var d=a^c,d=ha(-2048144789,d^(d>>>16|0)),d=d^(d>>>13|0),d=ha(-1028477387,d);return d^=d>>>16|0};l.b=m({Boa:0},!1,"scala.runtime.Statics$",{Boa:1,e:1});var BF=void 0;function Y(){BF||(BF=(new yF).d());return BF}function CF(){this.aU=null;this.IS=0;this.ST=this.Ega=this.Gga=this.Iga=this.Jga=this.Hga=this.$T=this.bU=this.cU=null;this.a=0}CF.prototype=new n;CF.prototype.constructor=CF;
-CF.prototype.d=function(){DF=this;this.aU=kf(lf(),y());this.a|=1;this.IS=W(I())|Jp(I());this.a|=2;for(var a=W(I()),a=(new E).f("WHO",a),c=EF(this),c=(new E).f("COLOR",c),d=W(I()),d=(new E).f("HEADING",d),e=W(I()),e=(new E).f("XCOR",e),f=W(I()),f=(new E).f("YCOR",f),h=Ip(I()),h=(new E).f("SHAPE",h),k=tc(),k=(new E).f("LABEL",k),r=EF(this),r=(new E).f("LABEL-COLOR",r),v=Kp(I()),v=(new E).f("BREED",v),C=Hp(I()),C=(new E).f("HIDDEN?",C),G=W(I()),G=(new E).f("SIZE",G),U=W(I()),U=(new E).f("PEN-SIZE",U),
-ba=Ip(I()),a=[a,c,d,e,f,h,k,r,v,C,G,U,(new E).f("PEN-MODE",ba)],c=lc(new mc,hf()),d=0,e=a.length|0;d<e;)pc(c,a[d]),d=1+d|0;this.cU=c.Ia;this.a|=4;a=W(I());a=(new E).f("PXCOR",a);c=W(I());c=(new E).f("PYCOR",c);d=EF(this);d=(new E).f("PCOLOR",d);e=tc();e=(new E).f("PLABEL",e);f=EF(this);a=[a,c,d,e,(new E).f("PLABEL-COLOR",f)];c=lc(new mc,hf());d=0;for(e=a.length|0;d<e;)pc(c,a[d]),d=1+d|0;this.bU=c.Ia;this.a|=8;a=Op(I());a=(new E).f("END1",a);c=Op(I());c=(new E).f("END2",c);d=EF(this);d=(new E).f("COLOR",
+CF.prototype.d=function(){DF=this;this.aU=kf(lf(),y());this.a|=1;this.IS=W(I())|Jp(I());this.a|=2;for(var a=W(I()),a=(new E).f("WHO",a),c=EF(this),c=(new E).f("COLOR",c),d=W(I()),d=(new E).f("HEADING",d),e=W(I()),e=(new E).f("XCOR",e),f=W(I()),f=(new E).f("YCOR",f),h=Ip(I()),h=(new E).f("SHAPE",h),k=tc(),k=(new E).f("LABEL",k),r=EF(this),r=(new E).f("LABEL-COLOR",r),v=Kp(I()),v=(new E).f("BREED",v),C=Hp(I()),C=(new E).f("HIDDEN?",C),G=W(I()),G=(new E).f("SIZE",G),U=W(I()),U=(new E).f("PEN-SIZE",U), V = EF(this), V = (new E).f("SOCKETID", V),
+ba=Ip(I()),a=[a,c,d,e,f,h,k,r,v,C,G,U,V,(new E).f("PEN-MODE",ba)],c=lc(new mc,hf()),d=0,e=a.length|0;d<e;)pc(c,a[d]),d=1+d|0;this.cU=c.Ia;this.a|=4;a=W(I());a=(new E).f("PXCOR",a);c=W(I());c=(new E).f("PYCOR",c);d=EF(this);d=(new E).f("PCOLOR",d);e=tc();e=(new E).f("PLABEL",e);f=EF(this);a=[a,c,d,e,(new E).f("PLABEL-COLOR",f)];c=lc(new mc,hf());d=0;for(e=a.length|0;d<e;)pc(c,a[d]),d=1+d|0;this.bU=c.Ia;this.a|=8;a=Op(I());a=(new E).f("END1",a);c=Op(I());c=(new E).f("END2",c);d=EF(this);d=(new E).f("COLOR",
 d);e=tc();e=(new E).f("LABEL",e);f=EF(this);f=(new E).f("LABEL-COLOR",f);h=Hp(I());h=(new E).f("HIDDEN?",h);k=Np(I());k=(new E).f("BREED",k);r=W(I());r=(new E).f("THICKNESS",r);v=Ip(I());v=(new E).f("SHAPE",v);C=Ip(I());a=[a,c,d,e,f,h,k,r,v,(new E).f("TIE-MODE",C)];c=lc(new mc,hf());d=0;for(e=a.length|0;d<e;)pc(c,a[d]),d=1+d|0;this.$T=c.Ia;this.a|=16;a=FF(this);a=nd(a);this.Hga=al(a);this.a|=32;a=GF(this);a=nd(a);this.Jga=al(a);this.a|=64;a=HF(this);a=nd(a);this.Iga=al(a);this.a|=128;a=IF(this);a=
 nd(a);this.Gga=al(a);this.a|=256;a=FF(this);a=nd(a);this.Ega=al(a).Ne((new Rl).ah(sa(ta)));this.a|=512;a=IF(this);a=nd(a);this.ST=al(a).Ne((new Rl).ah(sa(ta)));this.a|=1024;return this};function GF(a){if(0===(4&a.a))throw(new D).c("Uninitialized field: AgentVariables.scala: 14");return a.cU}function FF(a){if(0===(1&a.a))throw(new D).c("Uninitialized field: AgentVariables.scala: 9");return a.aU}function Jha(){var a=JF(),a=HF(a),a=nd(a);return al(a).Ne((new Rl).ah(sa(ta)))}
 function Fha(){var a=JF(),a=GF(a),a=nd(a);return al(a).Ne((new Rl).ah(sa(ta)))}function EF(a){if(0===(2&a.a))throw(new D).c("Uninitialized field: AgentVariables.scala: 12");return a.IS}function IF(a){if(0===(16&a.a))throw(new D).c("Uninitialized field: AgentVariables.scala: 36");return a.$T}function Eha(){var a=JF();if(0===(1024&a.a))throw(new D).c("Uninitialized field: AgentVariables.scala: 56");return a.ST}
@@ -46359,7 +46358,7 @@ function Bf(){vWa||(vWa=(new R8).d())};
 
 },{"brazierjs/array":"brazierarray","brazierjs/function":"brazierfunction","brazierjs/number":"braziernumber","brazierjs/object":"brazierobject","shim/strictmath":"shim/strictmath","util/nlmath":"util/nlmath","util/typechecker":"util/typechecker"}],"engine/core/link/linkvariables":[function(require,module,exports){
 (function() {
-  var ColorModel, ImmutableVariableSpec, MutableVariableSpec, NLType, Setters, VariableSpecs, ref, setBreed, setColor, setEnd1, setEnd2, setIsHidden, setLabel, setLabelColor, setShape, setThickness, setTieMode;
+  var ColorModel, ImmutableVariableSpec, MutableVariableSpec, NLType, Setters, VariableSpecs, ref, setBreed, setColor, setEnd1, setEnd2, setIsHidden, setLabel, setLabelColor, setShape, setThickness, setTieMode, setSocketid;
 
   ColorModel = require('engine/core/colormodel');
 
@@ -46412,6 +46411,11 @@ function Bf(){vWa||(vWa=(new R8).d())};
     this._color = ColorModel.wrapColor(color);
     this._genVarUpdate("color");
   };
+  
+  setSocketid = function(socketid) {
+    this._socketid = socketid;
+    this._genVarUpdate("socketid");
+  };
 
   setEnd1 = function(turtle) {
     this.end1 = turtle;
@@ -46458,7 +46462,8 @@ function Bf(){vWa||(vWa=(new R8).d())};
     setLabelColor: setLabelColor,
     setShape: setShape,
     setThickness: setThickness,
-    setTieMode: setTieMode
+    setTieMode: setTieMode,
+    setSocketid: setSocketid
   };
 
   VariableSpecs = [
@@ -46482,7 +46487,9 @@ function Bf(){vWa||(vWa=(new R8).d())};
       return this._thickness;
     }), setThickness), new MutableVariableSpec('tie-mode', (function() {
       return this.tiemode;
-    }), setTieMode)
+    }), setTieMode), new MutableVariableSpec('socketid', (function() {
+      return this._socketid;
+    }), setSocketid)  
   ];
 
   module.exports = {
@@ -48980,7 +48987,7 @@ function Bf(){vWa||(vWa=(new R8).d())};
 
 },{"util/nlmath":"util/nlmath"}],"engine/core/turtle/turtlevariables":[function(require,module,exports){
 (function() {
-  var ColorModel, ImmutableVariableSpec, MutableVariableSpec, NLMath, NLType, Setters, StrictMath, TopologyInterrupt, VariableSpecs, _handleTiesForHeadingChange, clone, getBreed, ignorantly, ignoring, ref, ref1, setBreed, setBreedShape, setColor, setHeading, setIsHidden, setLabel, setLabelColor, setShape, setSize, setXcor, setYcor;
+  var ColorModel, ImmutableVariableSpec, MutableVariableSpec, NLMath, NLType, Setters, StrictMath, TopologyInterrupt, VariableSpecs, _handleTiesForHeadingChange, clone, getBreed, ignorantly, ignoring, ref, ref1, setBreed, setBreedShape, setColor, setHeading, setIsHidden, setLabel, setLabelColor, setShape, setSize, setXcor, setYcor, setSocketid;
 
   ColorModel = require('engine/core/colormodel');
 
@@ -49143,6 +49150,11 @@ function Bf(){vWa||(vWa=(new R8).d())};
     this._givenShape = shape.toLowerCase();
     this._genVarUpdate("shape");
   };
+  
+  setSocketid = function(socketid) {
+    this._socketid = socketid;
+    this._genVarUpdate("socketid");
+  };
 
   setSize = function(size) {
     this._size = size;
@@ -49208,7 +49220,8 @@ function Bf(){vWa||(vWa=(new R8).d())};
     setLabel: setLabel,
     setLabelColor: setLabelColor,
     setShape: setShape,
-    setSize: setSize
+    setSize: setSize,
+    setSocketid
   };
 
   getBreed = (function() {
@@ -49244,7 +49257,9 @@ function Bf(){vWa||(vWa=(new R8).d())};
       return this.xcor;
     }), setXcor), new MutableVariableSpec('ycor', (function() {
       return this.ycor;
-    }), setYcor)
+    }), setYcor), new MutableVariableSpec('socketid', (function() {
+      return this._socketid;
+    }), setSocketid)
   ];
 
   module.exports = {
@@ -49533,7 +49548,7 @@ function Bf(){vWa||(vWa=(new R8).d())};
 
     Turtle.prototype.linkManager = void 0;
 
-    function Turtle(world, id1, _genUpdate, _registerLineDraw, _registerTurtleStamp, _registerDeath, _createTurtle, _removeTurtle, _color, _heading, xcor, ycor, breed, _label, _labelcolor, _hidden, _size, _givenShape, genPenManager) {
+    function Turtle(world, id1, _genUpdate, _registerLineDraw, _registerTurtleStamp, _registerDeath, _createTurtle, _removeTurtle, _color, _heading, xcor, ycor, breed, _label, _labelcolor, _hidden, _size, _givenShape, _socketid, genPenManager) {
       var varNames;
       this.world = world;
       this.id = id1;
@@ -49555,6 +49570,7 @@ function Bf(){vWa||(vWa=(new R8).d())};
       this._hidden = _hidden != null ? _hidden : false;
       this._size = _size != null ? _size : 1.0;
       this._givenShape = _givenShape;
+      this._socketid = _socketid != null ? _socketid : "";
       if (genPenManager == null) {
         genPenManager = (function(_this) {
           return function(self) {
@@ -50742,10 +50758,10 @@ function Bf(){vWa||(vWa=(new R8).d())};
       })(this));
     };
 
-    TurtleManager.prototype._createTurtle = function(color, heading, xcor, ycor, breed, label, lcolor, isHidden, size, shape, genPenManager) {
+    TurtleManager.prototype._createTurtle = function(color, heading, xcor, ycor, breed, label, lcolor, isHidden, size, shape, socketid, genPenManager) {
       var id, turtle;
       id = this._idManager.next();
-      turtle = new Turtle(this._world, id, this._updater.updated, this._updater.registerPenTrail, this._updater.registerTurtleStamp, this._updater.registerDeadTurtle, this._createTurtle, this._removeTurtle, color, heading, xcor, ycor, breed, label, lcolor, isHidden, size, shape, genPenManager);
+      turtle = new Turtle(this._world, id, this._updater.updated, this._updater.registerPenTrail, this._updater.registerTurtleStamp, this._updater.registerDeadTurtle, this._createTurtle, this._removeTurtle, color, heading, xcor, ycor, breed, label, lcolor, isHidden, size, shape, socketid, genPenManager);
       this._updater.updated(turtle).apply(null, Builtins.turtleBuiltins);
       this._turtles.push(turtle);
       this._turtlesById[id] = turtle;
@@ -54305,7 +54321,8 @@ function Bf(){vWa||(vWa=(new R8).d())};
         shape: ["SHAPE", turtle._getShape()],
         size: ["SIZE", turtle._size],
         xcor: ["XCOR", turtle.xcor],
-        ycor: ["YCOR", turtle.ycor]
+        ycor: ["YCOR", turtle.ycor],
+        socketid: ["SOCKETID", turtle._socketid]
       };
     };
 
@@ -55940,7 +55957,7 @@ into the sorting code and caused a 25% performance hit in BZ Benchmark. --JAB (4
 
   commands = ['__bench', '__change-topology', '__done', '__experimentstepend', '__export-drawing', '__foreverbuttonend', '__ignore', '__let', '__linkcode', '__make-preview', '__mkdir', '__observercode', '__patchcode', '__plot-pen-hide', '__plot-pen-show', '__pwd', '__reload-extensions', '__set-line-thickness', '__stderr', '__stdout', '__thunk-did-finish', '__turtlecode', 'ask', 'ask-concurrent', 'auto-plot-off', 'auto-plot-on', 'back', 'beep', 'bk', 'ca', 'carefully', 'cd', 'clear-all', 'clear-all-plots', 'clear-drawing', 'clear-globals', 'clear-links', 'clear-output', 'clear-patches', 'clear-plot', 'clear-ticks', 'clear-turtles', 'cp', 'create-link-from', 'create-link-to', 'create-link-with', 'create-links-from', 'create-links-to', 'create-links-with', 'create-ordered-turtles', 'create-temporary-plot-pen', 'create-turtles', 'cro', 'crt', 'ct', 'die', 'diffuse', 'diffuse4', 'display', 'downhill', 'downhill4', 'error', 'every', 'export-all-plots', 'export-interface', 'export-output', 'export-plot', 'export-view', 'export-world', 'face', 'facexy', 'fd', 'file-close', 'file-close-all', 'file-delete', 'file-flush', 'file-open', 'file-print', 'file-show', 'file-type', 'file-write', 'follow', 'follow-me', 'foreach', 'forward', 'hatch', 'hide-link', 'hide-turtle', 'histogram', 'home', 'ht', 'if', 'if-else', 'ifelse', 'import-drawing', 'import-pcolors', 'import-pcolors-rgb', 'import-world', 'inspect', 'jump', 'layout-circle', 'layout-radial', 'layout-spring', 'layout-tutte', 'left', 'let', 'loop', 'lt', 'move-to', 'no-display', 'output-print', 'output-show', 'output-type', 'output-write', 'pd', 'pe', 'pen-down', 'pen-erase', 'pen-up', 'pendown', 'penup', 'plot', 'plot-pen-down', 'plot-pen-reset', 'plot-pen-up', 'plotxy', 'print', 'pu', 'random-seed', 'repeat', 'report', 'reset-perspective', 'reset-ticks', 'reset-timer', 'resize-world', 'ride', 'ride-me', 'right', 'rp', 'rt', 'run', 'set', 'set-current-directory', 'set-current-plot', 'set-current-plot-pen', 'set-default-shape', 'set-histogram-num-bars', 'set-patch-size', 'set-plot-pen-color', 'set-plot-pen-interval', 'set-plot-pen-mode', 'set-plot-x-range', 'set-plot-y-range', 'setup-plots', 'setxy', 'show', 'show-link', 'show-turtle', 'sprout', 'st', 'stamp', 'stamp-erase', 'stop', 'tick', 'tick-advance', 'tie', 'type', 'untie', 'update-plots', 'uphill', 'uphill4', 'user-message', 'wait', 'watch', 'watch-me', 'while', 'with-local-randomness', 'without-interruption', 'write'].reverse();
 
-  reporters = ['!=', '\\*', '\\+', '-', '/', '<', '<=', '=', '>', '>=', '\\^', '__boom', '__check-syntax', '__dump', '__dump-extension-prims', '__dump-extensions', '__dump1', '__hubnet-in-q-size', '__hubnet-out-q-size', '__nano-time', '__patchcol', '__patchrow', '__processors', '__random-state', '__stack-trace', '__to-string', 'abs', 'acos', 'all\\?', 'and', 'any\\?', 'approximate-hsb', 'approximate-rgb', 'asin', 'at-points', 'atan', 'autoplot\\?', 'base-colors', 'behaviorspace-run-number', 'bf', 'bl', 'both-ends', 'but-first', 'but-last', 'butfirst', 'butlast', 'can-move\\?', 'ceiling', 'cos', 'count', 'date-and-time', 'distance', 'distance-nowrap', 'distancexy', 'distancexy-nowrap', 'dx', 'dy', 'empty\\?', 'end1', 'end2', 'error-message', 'exp', 'extract-hsb', 'extract-rgb', 'file-at-end\\?', 'file-exists\\?', 'file-read', 'file-read-characters', 'file-read-line', 'filter', 'first', 'floor', 'fput', 'hsb', 'hubnet-clients-list', 'hubnet-enter-message\\?', 'hubnet-exit-message\\?', 'hubnet-message', 'hubnet-message-source', 'hubnet-message-tag', 'hubnet-message-waiting\\?', 'ifelse-value', 'in-cone', 'in-cone-nowrap', 'in-link-from', 'in-link-neighbor\\?', 'in-link-neighbors', 'in-radius', 'in-radius-nowrap', 'int', 'is-agent\\?', 'is-agentset\\?', 'is-boolean\\?', 'is-command-task\\?', 'is-directed-link\\?', 'is-link-set\\?', 'is-link\\?', 'is-list\\?', 'is-number\\?', 'is-patch-set\\?', 'is-patch\\?', 'is-reporter-task\\?', 'is-string\\?', 'is-turtle-set\\?', 'is-turtle\\?', 'is-undirected-link\\?', 'item', 'last', 'length', 'link', 'link-heading', 'link-length', 'link-neighbor\\?', 'link-neighbors', 'link-set', 'link-shapes', 'link-with', 'links', 'list', 'ln', 'log', 'lput', 'map', 'max', 'max-n-of', 'max-one-of', 'max-pxcor', 'max-pycor', 'mean', 'median', 'member\\?', 'min', 'min-n-of', 'min-one-of', 'min-pxcor', 'min-pycor', 'mod', 'modes', 'mouse-down\\?', 'mouse-inside\\?', 'mouse-xcor', 'mouse-ycor', 'movie-status', 'my-in-links', 'my-links', 'my-out-links', 'myself', 'n-of', 'n-values', 'neighbors', 'neighbors4', 'netlogo-applet\\?', 'netlogo-version', 'netlogo-web\\?', 'new-seed', 'no-links', 'no-patches', 'no-turtles', 'not', 'of', 'one-of', 'or', 'other', 'other-end', 'out-link-neighbor\\?', 'out-link-neighbors', 'out-link-to', 'patch', 'patch-ahead', 'patch-at', 'patch-at-heading-and-distance', 'patch-here', 'patch-left-and-ahead', 'patch-right-and-ahead', 'patch-set', 'patch-size', 'patches', 'plot-name', 'plot-pen-exists\\?', 'plot-x-max', 'plot-x-min', 'plot-y-max', 'plot-y-min', 'position', 'precision', 'random', 'random-exponential', 'random-float', 'random-gamma', 'random-normal', 'random-or-random-float', 'random-poisson', 'random-pxcor', 'random-pycor', 'random-xcor', 'random-ycor', 'read-from-string', 'reduce', 'remainder', 'remove', 'remove-duplicates', 'remove-item', 'replace-item', 'reverse', 'rgb', 'round', 'run-result', 'runresult', 'scale-color', 'se', 'self', 'sentence', 'shade-of\\?', 'shapes', 'shuffle', 'sin', 'sort', 'sort-by', 'sort-on', 'sqrt', 'standard-deviation', 'subject', 'sublist', 'substring', 'subtract-headings', 'sum', 'tan', 'task', 'ticks', 'timer', 'towards', 'towards-nowrap', 'towardsxy', 'towardsxy-nowrap', 'turtle', 'turtle-set', 'turtles', 'turtles-at', 'turtles-here', 'turtles-on', 'user-directory', 'user-file', 'user-input', 'user-new-file', 'user-one-of', 'user-yes-or-no\\?', 'value-from', 'values-from', 'variance', 'with', 'with-max', 'with-min', 'word', 'world-height', 'world-width', 'wrap-color', 'xor', 'WHO', 'COLOR', 'HEADING', 'XCOR', 'YCOR', 'SHAPE', 'LABEL', 'LABEL-COLOR', 'BREED', 'HIDDEN\\?', 'SIZE', 'PEN-SIZE', 'PEN-MODE', 'PXCOR', 'PYCOR', 'PCOLOR', 'PLABEL', 'PLABEL-COLOR', 'END1', 'END2', 'COLOR', 'LABEL', 'LABEL-COLOR', 'HIDDEN\\?', 'BREED', 'THICKNESS', 'SHAPE', 'TIE-MODE'].reverse();
+  reporters = ['!=', '\\*', '\\+', '-', '/', '<', '<=', '=', '>', '>=', '\\^', '__boom', '__check-syntax', '__dump', '__dump-extension-prims', '__dump-extensions', '__dump1', '__hubnet-in-q-size', '__hubnet-out-q-size', '__nano-time', '__patchcol', '__patchrow', '__processors', '__random-state', '__stack-trace', '__to-string', 'abs', 'acos', 'all\\?', 'and', 'any\\?', 'approximate-hsb', 'approximate-rgb', 'asin', 'at-points', 'atan', 'autoplot\\?', 'base-colors', 'behaviorspace-run-number', 'bf', 'bl', 'both-ends', 'but-first', 'but-last', 'butfirst', 'butlast', 'can-move\\?', 'ceiling', 'cos', 'count', 'date-and-time', 'distance', 'distance-nowrap', 'distancexy', 'distancexy-nowrap', 'dx', 'dy', 'empty\\?', 'end1', 'end2', 'error-message', 'exp', 'extract-hsb', 'extract-rgb', 'file-at-end\\?', 'file-exists\\?', 'file-read', 'file-read-characters', 'file-read-line', 'filter', 'first', 'floor', 'fput', 'hsb', 'hubnet-clients-list', 'hubnet-enter-message\\?', 'hubnet-exit-message\\?', 'hubnet-message', 'hubnet-message-source', 'hubnet-message-tag', 'hubnet-message-waiting\\?', 'ifelse-value', 'in-cone', 'in-cone-nowrap', 'in-link-from', 'in-link-neighbor\\?', 'in-link-neighbors', 'in-radius', 'in-radius-nowrap', 'int', 'is-agent\\?', 'is-agentset\\?', 'is-boolean\\?', 'is-command-task\\?', 'is-directed-link\\?', 'is-link-set\\?', 'is-link\\?', 'is-list\\?', 'is-number\\?', 'is-patch-set\\?', 'is-patch\\?', 'is-reporter-task\\?', 'is-string\\?', 'is-turtle-set\\?', 'is-turtle\\?', 'is-undirected-link\\?', 'item', 'last', 'length', 'link', 'link-heading', 'link-length', 'link-neighbor\\?', 'link-neighbors', 'link-set', 'link-shapes', 'link-with', 'links', 'list', 'ln', 'log', 'lput', 'map', 'max', 'max-n-of', 'max-one-of', 'max-pxcor', 'max-pycor', 'mean', 'median', 'member\\?', 'min', 'min-n-of', 'min-one-of', 'min-pxcor', 'min-pycor', 'mod', 'modes', 'mouse-down\\?', 'mouse-inside\\?', 'mouse-xcor', 'mouse-ycor', 'movie-status', 'my-in-links', 'my-links', 'my-out-links', 'myself', 'n-of', 'n-values', 'neighbors', 'neighbors4', 'netlogo-applet\\?', 'netlogo-version', 'netlogo-web\\?', 'new-seed', 'no-links', 'no-patches', 'no-turtles', 'not', 'of', 'one-of', 'or', 'other', 'other-end', 'out-link-neighbor\\?', 'out-link-neighbors', 'out-link-to', 'patch', 'patch-ahead', 'patch-at', 'patch-at-heading-and-distance', 'patch-here', 'patch-left-and-ahead', 'patch-right-and-ahead', 'patch-set', 'patch-size', 'patches', 'plot-name', 'plot-pen-exists\\?', 'plot-x-max', 'plot-x-min', 'plot-y-max', 'plot-y-min', 'position', 'precision', 'random', 'random-exponential', 'random-float', 'random-gamma', 'random-normal', 'random-or-random-float', 'random-poisson', 'random-pxcor', 'random-pycor', 'random-xcor', 'random-ycor', 'read-from-string', 'reduce', 'remainder', 'remove', 'remove-duplicates', 'remove-item', 'replace-item', 'reverse', 'rgb', 'round', 'run-result', 'runresult', 'scale-color', 'se', 'self', 'sentence', 'shade-of\\?', 'shapes', 'shuffle', 'sin', 'sort', 'sort-by', 'sort-on', 'sqrt', 'standard-deviation', 'subject', 'sublist', 'substring', 'subtract-headings', 'sum', 'tan', 'task', 'ticks', 'timer', 'towards', 'towards-nowrap', 'towardsxy', 'towardsxy-nowrap', 'turtle', 'turtle-set', 'turtles', 'turtles-at', 'turtles-here', 'turtles-on', 'user-directory', 'user-file', 'user-input', 'user-new-file', 'user-one-of', 'user-yes-or-no\\?', 'value-from', 'values-from', 'variance', 'with', 'with-max', 'with-min', 'word', 'world-height', 'world-width', 'wrap-color', 'xor', 'WHO', 'COLOR', 'HEADING', 'XCOR', 'YCOR', 'SHAPE', 'LABEL', 'LABEL-COLOR', 'BREED', 'HIDDEN\\?', 'SIZE', 'PEN-SIZE', 'PEN-MODE', 'PXCOR', 'PYCOR', 'PCOLOR', 'PLABEL', 'PLABEL-COLOR', 'END1', 'END2', 'COLOR', 'LABEL', 'LABEL-COLOR', 'HIDDEN\\?', 'BREED', 'THICKNESS', 'SHAPE', 'TIE-MODE', 'SOCKETID'].reverse();
 
   constants = ['TRUE', 'FALSE', 'NOBODY', 'E', 'PI', 'gray', 'grey', 'red', 'orange', 'brown', 'yellow', 'green', 'lime', 'turquoise', 'cyan', 'sky', 'blue', 'violet', 'magenta', 'pink', 'black', 'white'];
 
@@ -63400,7 +63417,6 @@ turtles-own
   infected    ;; if a turtle is sick, infected is true, otherwise, it is false
   baseshape   ;; original shape of a turtle
   stepsize    ;; the amount that a turtle will go forward in the current direction
-  socketid      ;; socketid of hubnet-web-user
 ]
 
 breed [ androids android ]  ;; created by the CREATE ANDROIDS button; not controlled by anyone, but can become sick and spread sickness
