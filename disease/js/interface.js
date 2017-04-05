@@ -44,6 +44,9 @@ Interface = (function() {
     $("#netlogo-monitor-31").removeClass("hidden");
     $("#netlogo-monitor-32").removeClass("hidden");
     $("#netlogo-inputBox-30").addClass("hidden");
+    $("#netlogo-monitor-27 output").html("<span id='color'></span> <span id='shape'></span>");
+    $("#netlogo-monitor-28 output").html("(<span id='xcor'></span>, <span id='ycor'></span>)");
+    $("#netlogo-monitor-29 output").html("<span id='infected'></span>")
   }
 
   return {
