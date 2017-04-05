@@ -2,9 +2,12 @@
   "name": "cremmler",
   "version": "0.0.0",
   "description": "Test Websockets",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "6.10.1"
   },
   "author": "cremmler",
   "license": "ISC",
@@ -12,5 +15,14 @@
     "express": "^4.15.2",
     "nodemon": "^1.11.0",
     "socket.io": "^1.7.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.heroku.com/guarded-caverns-15322.git"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ]
 }
